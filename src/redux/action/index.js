@@ -24,3 +24,9 @@ export const isLoggedOut = () => {
     },
   };
 };
+
+export const removeUser = () => {
+  return {
+    type: "DELETE_USER_DATA",
+  };
+};

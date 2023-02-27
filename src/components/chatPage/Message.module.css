@@ -1,0 +1,67 @@
+.messageBox {
+  margin: 0 auto;
+  min-height: 500px;
+  max-height: 500px;
+
+  padding: 20px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sent {
+  text-align: right;
+  position: relative;
+  display: block;
+  margin-left: 15%;
+  margin-bottom: 4px;
+}
+.sent div {
+  margin-top: 0;
+  margin-bottom: 4px;
+  display: inline-block;
+  color: white;
+  background-color: #047dff;
+  padding: 20px 20px;
+  padding-bottom: 5px;
+  word-wrap: break-word;
+  font-size: 1rem;
+  border-radius: 15px;
+}
+
+.recieved {
+  text-align: left;
+  position: relative;
+  margin-right: 15%;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+.recieved div {
+  /* E9E9EB */
+  margin-top: 0;
+  margin-bottom: 4px;
+  display: inline-block;
+  word-wrap: break-word;
+  color: black;
+  background-color: #e9e9eb;
+  padding: 20px 20px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+}
+.time {
+  margin: 0;
+  margin-top: 5px;
+  position: relative;
+  left: 5px;
+  margin-bottom: 0;
+  font-size: 0.65rem;
+}
+.timeRecieved {
+  margin: 0;
+  text-align: right;
+  margin-top: 5px;
+  position: relative;
+  left: 5px;
+  margin-bottom: 0;
+  font-size: 0.65rem;
+}

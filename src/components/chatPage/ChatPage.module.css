@@ -1,0 +1,10 @@
+.closeBtn {
+  position: absolute;
+  right: 2%;
+  font-size: 1.2rem;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgb(199, 27, 27);
+}

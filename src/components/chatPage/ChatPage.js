@@ -1,52 +1,107 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import api from "../../api";
-import io from "socket.io-client";
-const socket = io("http://localhost:5000", { autoConnect: false });
-
-const ChatPage = () => {
+import Messages from "./Messages";
+import classes from "./ChatPage.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import profilePic from "../../images/cow.png";
+const ChatPage = (props) => {
   const [isloading, setIsLoading] = useState(true);
   const [senderData, setSenderData] = useState();
+  const [text, setText] = useState("");
+  const [isOnline, setIsOnline] = useState(false);
   const user = JSON.parse(localStorage.getItem("userData"));
   const [recieverData, setRecieverData] = useState();
-  const { recieverId } = useParams();
-  console.log(recieverId);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [chatData, setChatData] = useState([]);
+  const socket = props.socket;
   useEffect(() => {
+    const recieverId = props.chatData.recieverId;
+    console.log("chat page");
     const getData = async () => {
       try {
+        console.log("userList chat data");
         setSenderData(user);
         const data = await api.get(`/user/${recieverId}`, {
           headers: { authorization: `Bearer ${user.token}` },
         });
+        const getChatData = await api.get(`/chat/${user._id}/${recieverId}`, {
+          headers: { authorization: `Bearer ${user.token}` },
+        });
+        setChatData(getChatData.data.data);
         setRecieverData(data.data.user);
         setIsLoading(false);
       } catch (e) {
         console.log(e);
       }
     };
-    socket.auth = { id: user._id };
-    socket.connect();
     getData();
-  }, []);
+  }, [props.chatData]);
 
-  const submitHandler = (e) => {
+  const changeHandler = (e) => {
+    setText(e.target.value);
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const data = { reciverId: recieverId, message: "hello" };
+    const data = {
+      recieverId: recieverData._id,
+      senderId: senderData._id,
+      senderName: user.userName,
+      message: text,
+    };
+    try {
+      const res = await api.post(
+        "/chat",
+        {
+          senderId: senderData._id,
+          recieverId: recieverData._id,
+          message: text,
+        },
+        {
+          headers: { authorization: `Bearer ${user.token}` },
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    console.log("submit");
     socket.emit("hello", data);
+    setText("");
   };
 
   return (
     <div>
+      <img scr={profilePic} alt="profile Pic"></img>
       {isloading ? (
         <>loading</>
       ) : (
         <>
-          <div>Chating with {recieverData.userName}</div>
+          <div style={{ position: "relative" }}>
+            Chating with {recieverData.userName}{" "}
+            <FontAwesomeIcon
+              onClick={() => {
+                props.chatCloseHandler();
+              }}
+              className={classes.closeBtn}
+              icon={faCircleXmark}
+            />
+          </div>
+
           <div>
-            <div> Chat Box</div>
+            <Messages
+              userId={user._id}
+              recieverId={recieverData._id}
+              chatData={chatData}
+              socket={socket}
+            />
             <form onSubmit={submitHandler}>
-              <input type="text"></input>
+              <input
+                type="text"
+                required={true}
+                onChange={changeHandler}
+                value={text}
+              ></input>
               <button type="submit">Submit</button>
             </form>
           </div>
