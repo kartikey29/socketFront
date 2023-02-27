@@ -47,7 +47,7 @@ const ChatPage = (props) => {
     return () => {
       socket.off("typing");
     };
-  }, [props.chatData, typing]);
+  }, [props.chatData]);
 
   function timeoutFunction() {
     socket.emit("typing", {
