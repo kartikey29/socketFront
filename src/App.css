@@ -1,0 +1,20 @@
+.navBar {
+  background-color: rgb(247, 32, 172);
+  padding: 15px;
+  position: relative;
+  margin-bottom: 1%;
+  color: white;
+  padding-left: 3%;
+}
+.navBar button {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  border-radius: 10px;
+  background-color: red;
+  border: 2px solid black;
+  padding: 5px;
+  color: white;
+}

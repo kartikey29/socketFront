@@ -10,7 +10,7 @@ import {
 } from "./redux/action";
 import api from "./api";
 import UserList from "./components/UserList";
-import ChatPage from "./components/chatPage/ChatPage";
+import "./App.css";
 
 function App() {
   const isLogin = useSelector((state) => state.login);
@@ -57,8 +57,9 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        Navbar {isLogin && <button onClick={logoutHandler}>Logout</button>}
+      <div className="navBar">
+        <h1>ChatApp</h1>{" "}
+        {isLogin && <button onClick={logoutHandler}>Logout</button>}
       </div>
       <Router>
         <Routes>
@@ -69,7 +70,6 @@ function App() {
                 <div>Loading</div>
               ) : isLogin ? (
                 <div>
-                  <h1>Chat With User</h1>
                   <div style={{ textAlign: "center" }}>
                     <UserList></UserList>
                   </div>

@@ -9,6 +9,8 @@ import ChatPage from "./chatPage/ChatPage";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import profilePic from "../images/civilised.jpg";
+import classes from "./UserList.module.css";
 
 const socket = io(process.env.REACT_APP_BACKEND_URL, { autoConnect: false });
 
@@ -120,7 +122,13 @@ const UserList = () => {
           <ToastContainer />
           <Container fluid>
             <Row>
-              <Col>{userDataMap(userList)}</Col>
+              <Col>
+                <div className={classes.profile}>
+                  <img src={profilePic} alt="profile pifc" />
+                  {user.userName} (You)
+                </div>
+                {userDataMap(userList)}
+              </Col>
               <Col lg={9}>
                 {chatOpen && (
                   <ChatPage

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, generatePath } from "react-router-dom";
 import classes from "./Card.module.css";
-import io from "socket.io-client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Card = (props) => {
   const user = JSON.parse(localStorage.getItem("userData"));
@@ -20,11 +20,13 @@ const Card = (props) => {
   };
   return (
     <>
-      <div className={classes.holder}>
-        <div>user:- {props.userName}</div>
-        {/* <Link to={`/chat/${props.id}`}>Chat</Link> */}
-        <button onClick={clickHandler}>Chat</button>
-        {online && <div style={{ color: "green" }}>Online</div>}
+      <div className={classes.holder} onClick={clickHandler}>
+        <div>{props.userName}</div>
+        <FontAwesomeIcon
+          icon={faCircle}
+          style={online ? { color: "green" } : { color: "red" }}
+          className={classes.onlineStatus}
+        />
       </div>
     </>
   );

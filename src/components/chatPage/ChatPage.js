@@ -4,7 +4,8 @@ import Messages from "./Messages";
 import classes from "./ChatPage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import profilePic from "../../images/cow.png";
+import profilePic from "../../images/cow.jpg";
+
 const ChatPage = (props) => {
   const [isloading, setIsLoading] = useState(true);
   const [senderData, setSenderData] = useState();
@@ -72,13 +73,20 @@ const ChatPage = (props) => {
 
   return (
     <div>
-      <img scr={profilePic} alt="profile Pic"></img>
       {isloading ? (
         <>loading</>
       ) : (
         <>
-          <div style={{ position: "relative" }}>
-            Chating with {recieverData.userName}{" "}
+          <div
+            className={classes.profileHeader}
+            style={{ position: "relative" }}
+          >
+            <img
+              className={classes.profilePic}
+              alt="profile"
+              src={profilePic}
+            />{" "}
+            {recieverData.userName}
             <FontAwesomeIcon
               onClick={() => {
                 props.chatCloseHandler();
@@ -95,7 +103,7 @@ const ChatPage = (props) => {
               chatData={chatData}
               socket={socket}
             />
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={classes.chatInput}>
               <input
                 type="text"
                 required={true}

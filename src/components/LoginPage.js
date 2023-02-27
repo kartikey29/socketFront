@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import api from "../api";
 import { useDispatch } from "react-redux";
 import { gotUserData, isLogin as setLoginTrue } from "../redux/action";
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 const LoginPage = () => {
   const [isLogin, setIslogin] = useState(true);
   const [userName, setUserName] = useState("");
@@ -50,6 +51,7 @@ const LoginPage = () => {
   };
   const signUpHandler = async (e) => {
     e.preventDefault();
+    console.log("signUp handler run");
     try {
       if (confirmPassword === password) {
         const body = {
@@ -71,73 +73,97 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ width: "40%", margin: "5% auto" }}>
       {isLogin ? (
         <>
-          <form onSubmit={loginHandler}>
-            <input
-              name="userName"
-              placeholder="Enter Username"
-              value={userName}
-              onChange={changeHandler}
-            ></input>
-            <input
-              name="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={changeHandler}
-            ></input>
-            <button type="submit">Login</button>
-            <br></br>
-            <button
-              onClick={() => {
-                setIslogin(false);
-                setUserName("");
-                setPassword("");
-                setErrorMessage("");
-              }}
-            >
-              Create Account
-            </button>
+          <Form onSubmit={loginHandler}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="userName"
+                value={userName}
+                onChange={changeHandler}
+                type="text"
+                placeholder="Enter Username"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                value={password}
+                onChange={changeHandler}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Login
+            </Button>
             <h4>{erroMessage}</h4>
-          </form>
+          </Form>
+          <Button
+            variant="outline-primary"
+            onClick={() => {
+              setIslogin(false);
+              setUserName("");
+              setPassword("");
+              setConfirmPassword("");
+              setErrorMessage("");
+            }}
+          >
+            Register
+          </Button>
         </>
       ) : (
         <>
-          <form onSubmit={signUpHandler}>
-            <input
-              name="userName"
-              placeholder="Enter Username"
-              value={userName}
-              onChange={changeHandler}
-            ></input>
-            <input
-              name="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={changeHandler}
-            ></input>
-            <input
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={changeHandler}
-            ></input>
-            <button type="submit">SignUp</button>
-            <br></br>
-            <button
-              onClick={() => {
-                setIslogin(true);
-                setUserName("");
-                setPassword("");
-                setConfirmPassword("");
-                setErrorMessage("");
-              }}
-            >
-              Login into existing Account
-            </button>
+          <Form onSubmit={signUpHandler}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="userName"
+                value={userName}
+                onChange={changeHandler}
+                type="text"
+                placeholder="Enter Username"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                value={password}
+                onChange={changeHandler}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={changeHandler}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Register
+            </Button>
             <h4>{erroMessage}</h4>
-          </form>
+          </Form>
+          <Button
+            variant="outline-primary"
+            onClick={() => {
+              setIslogin(true);
+              setUserName("");
+              setPassword("");
+              setConfirmPassword("");
+              setErrorMessage("");
+            }}
+          >
+            Login into existing
+          </Button>
         </>
       )}
     </div>

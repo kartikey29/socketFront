@@ -1,6 +1,18 @@
 .holder {
-  width: 30%;
   text-align: left;
+  padding: 20px;
+  cursor: pointer;
+  background-color: rgb(241, 238, 238);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  position: relative;
+  margin: 10px 0;
 }
-.chatBtn {
+
+.onlineStatus {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 10%;
 }

@@ -8,3 +8,32 @@
   cursor: pointer;
   color: rgb(199, 27, 27);
 }
+
+.profilePic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px black solid;
+}
+
+.profileHeader {
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding-left: 2%;
+  text-align: left;
+  font-size: 1.3rem;
+  background-color: rgb(230, 222, 222);
+}
+.chatInput input {
+  width: 70%;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  border-radius: 10px;
+}
+.chatInput button {
+  border-radius: 10px;
+  background-color: #047dff;
+  border: 1px solid black;
+  color: white;
+}
