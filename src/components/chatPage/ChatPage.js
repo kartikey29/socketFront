@@ -15,6 +15,7 @@ const ChatPage = (props) => {
   const [recieverData, setRecieverData] = useState();
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [chatData, setChatData] = useState([]);
+  const [typing, setTyping] = useState(false);
   const socket = props.socket;
   useEffect(() => {
     const recieverId = props.chatData.recieverId;
@@ -37,9 +38,34 @@ const ChatPage = (props) => {
       }
     };
     getData();
-  }, [props.chatData]);
+    socket.on("typing", (e) => {
+      if (e.recieverId === user._id && e.senderId === recieverId) {
+        console.log(e.typing);
+        setTyping(e.typing);
+      }
+    });
+    return () => {
+      socket.off("typing");
+    };
+  }, [props.chatData, typing]);
 
+  function timeoutFunction() {
+    socket.emit("typing", {
+      senderId: senderData._id,
+      recieverId: recieverData._id,
+      typing: false,
+    });
+  }
+  let timeout;
   const changeHandler = (e) => {
+    socket.emit("typing", {
+      senderId: senderData._id,
+      recieverId: recieverData._id,
+      typing: true,
+    });
+    clearTimeout(timeout);
+    timeout = setTimeout(timeoutFunction, 2000);
+
     setText(e.target.value);
   };
 
@@ -103,6 +129,11 @@ const ChatPage = (props) => {
               chatData={chatData}
               socket={socket}
             />
+            {typing && (
+              <div className={classes.typing}>
+                <p>typing....</p>
+              </div>
+            )}
             <form onSubmit={submitHandler} className={classes.chatInput}>
               <input
                 type="text"
